@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Pulse::filter(function (Entry|Value $entry) {
-            //
+            return false;
         });
     }
 }

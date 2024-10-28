@@ -44,3 +44,4 @@ Elenco degli hash dei commit:
 - `4c937be` - Initial commit
 - `bc7d5fe` - Pulse installation
 - `af5d6c2` Authorization, users resolution and dashboard customization
+- `df931ef` Filtering and Performance
