@@ -43,4 +43,5 @@ git checkout <commit_hash>
 Elenco degli hash dei commit:
 - `4c937be` - Initial commit
 - `bc7d5fe` - Pulse installation
-- `af5d6c2` Authorization, users resolution and dashboard customization
+- `af5d6c2` - Authorization, users resolution and dashboard customization
+- `fb661b5` - Filtering and Performance

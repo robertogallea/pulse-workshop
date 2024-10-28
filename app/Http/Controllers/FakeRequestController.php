@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\CustomEvent;
-use App\Events\OrderPlaced;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +16,8 @@ class FakeRequestController extends Controller
     public function __invoke()
     {
         Auth::onceUsingId($user ?? rand(1, User::count()));
+
+        Event::dispatch(new CustomEvent(Auth::id(), now()->timestamp));
 
         // EXCEPTIONS
         Lottery::odds(0.1)

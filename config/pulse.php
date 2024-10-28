@@ -134,6 +134,11 @@ return [
     */
 
     'recorders' => [
+        \App\Recorders\CustomEventRecorder::class => [
+            'enabled' => env('PULSE_CUSTOM_EVENT_RECORDER_ENABLED', true),
+            'sample_rate' => env('PULSE_CUSTOM_EVENT_RECORDER_SAMLE_RATE', 0.9),
+        ],
+
         Recorders\CacheInteractions::class => [
             'enabled' => env('PULSE_CACHE_INTERACTIONS_ENABLED', true),
             'sample_rate' => env('PULSE_CACHE_INTERACTIONS_SAMPLE_RATE', 1),
