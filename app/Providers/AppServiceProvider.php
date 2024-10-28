@@ -23,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('viewPulse', fn($user) => $user->id === 1);
+
+        Pulse::user(fn($user) => [
+            'name' => Str::reverse($user->name),
+            'extra' => fake()->sentence(),
+            'avatar' => 'https://ui-avatars.com/api/?name='.$user->name.'&background='.Str::of(fake()->hexColor())->substr(1).'&color='.Str::of(fake()->hexColor())->substr(1),
+        ]);
     }
 }

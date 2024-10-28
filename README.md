@@ -42,3 +42,4 @@ git checkout <commit_hash>
 
 Elenco degli hash dei commit:
 - `4c937be` - Initial commit
+- `bc7d5fe` - Pulse installation
