@@ -40,4 +40,5 @@ Per spostarsi da un commit all'altro, eseguire il comando
 git checkout <commit_hash>
 ```
 
-L'elenco degli hash dei commit verrà riportato in questa pagina al termine del corso.
+Elenco degli hash dei commit:
+- `4c937be` - Initial commit
