@@ -46,3 +46,4 @@ Elenco degli hash dei commit:
 - `af5d6c2` - Authorization, users resolution and dashboard customization
 - `fb661b5` - Filtering and Performance
 - `8819e54` - Custom cards: CustomEvent Card (Event based recorder)
+- `645c73c` - Custom cards: Current Weather Card (IsolatedBeat)

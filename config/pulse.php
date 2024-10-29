@@ -134,6 +134,10 @@ return [
     */
 
     'recorders' => [
+        \App\Recorders\PulseStorageRecorder::class => [
+            'enabled' => env('PULSE_STORAGE_RECORDER_ENABLED', true),
+        ],
+
         \App\Recorders\WeatherRecorder::class => [
             'enabled' => env('PULSE_WEATHER_RECORDER_ENABLED', true),
             'coordinates' => [
