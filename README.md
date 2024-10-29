@@ -10,23 +10,35 @@ Per installare l'applicazione di esempio eseguire i seguenti comandi:
 ```shell
 git clone https://github.com/robertogallea/pulse-workshop.git
 ```
-2. Installazione dipendenze composer
+2. Spostati all'interno del progetto
+```shell
+cd pulse-workshop
+```
+3. Copia il file di env
+```shell
+cp .env.example .env
+```
+4. Installazione dipendenze composer
 ```shell
 composer install
 ```
-3. Installazione dipendenze npm
+5. Genera una chiave di applicazione
+```shell
+php artisan key:generate
+```
+6. Installazione dipendenze npm
 ```shell
 npm install
 ```
-4. Creazione del database sqlite di test
+7. Creazione del database sqlite di test
 ```shell
 touch database/database.sqlite
 ```
-5. Migrazione e seeding del database
+8. Migrazione e seeding del database
 ```shell
 php artisan migrate:fresh --seed
 ```
-6. Esecuzione dell'ambiente di sviluppo
+9. Esecuzione dell'ambiente di sviluppo
 ```shell
 composer dev
 ```
