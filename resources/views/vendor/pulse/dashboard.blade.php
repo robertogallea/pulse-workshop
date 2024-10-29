@@ -1,6 +1,8 @@
 <x-pulse full-width>
     <livewire:pulse.servers cols="full" />
 
+    <livewire:pulse.graph-weather-card cols="full" />
+
     <livewire:pulse.weather-card cols="6" />
 
     <livewire:pulse.pulse-storage-card cols="6" />

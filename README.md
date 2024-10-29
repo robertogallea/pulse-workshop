@@ -47,3 +47,4 @@ Elenco degli hash dei commit:
 - `fb661b5` - Filtering and Performance
 - `8819e54` - Custom cards: CustomEvent Card (Event based recorder)
 - `645c73c` - Custom cards: Current Weather Card (IsolatedBeat)
+- `7cc894a` - Custom cards: Exercise 1: Pulse Storage Card (SharedBeat)

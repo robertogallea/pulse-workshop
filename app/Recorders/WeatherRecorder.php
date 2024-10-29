@@ -22,7 +22,7 @@ class WeatherRecorder
 
     public function record(IsolatedBeat $event): void
     {
-        $this->throttle(60, $event, function ($event) {
+        $this->throttle(30, $event, function ($event) {
             $coordinates = $this->config->get('pulse.recorders.'.self::class.'.coordinates');
 
             $data = Http::get("https://api.open-meteo.com/v1/forecast?latitude={$coordinates['lat']}&longitude={$coordinates['lng']}&current=temperature_2m,wind_speed_10m")
@@ -36,6 +36,11 @@ class WeatherRecorder
             ];
 
             $this->pulse->set('weather', 'data', json_encode($weather, flags: JSON_THROW_ON_ERROR));
+
+            $this->pulse->record('temperature', 'data', (int) ((float) $weather['temperature'] * 10))
+                ->avg()->onlyBuckets();
+            $this->pulse->record('wind', 'data', (int) ((float) $weather['wind'] * 10))
+                ->avg()->onlyBuckets();
         });
     }
 }
