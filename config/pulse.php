@@ -134,6 +134,10 @@ return [
     */
 
     'recorders' => [
+        \App\Recorders\RequestTrackerRecorder::class => [
+            'enabled' => env('PULSE_REQUEST_TRACKER_RECORDER_ENABLED', true),
+        ],
+
         \App\Recorders\PulseStorageRecorder::class => [
             'enabled' => env('PULSE_STORAGE_RECORDER_ENABLED', true),
         ],
