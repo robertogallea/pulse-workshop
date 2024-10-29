@@ -134,6 +134,14 @@ return [
     */
 
     'recorders' => [
+        \App\Recorders\WeatherRecorder::class => [
+            'enabled' => env('PULSE_WEATHER_RECORDER_ENABLED', true),
+            'coordinates' => [
+                'lat' => 45.42,
+                'lng' => 10.91,
+            ]
+        ],
+
         \App\Recorders\CustomEventRecorder::class => [
             'enabled' => env('PULSE_CUSTOM_EVENT_RECORDER_ENABLED', true),
             'sample_rate' => env('PULSE_CUSTOM_EVENT_RECORDER_SAMLE_RATE', 0.9),
