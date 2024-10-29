@@ -147,7 +147,17 @@ return [
             'coordinates' => [
                 'lat' => 45.42,
                 'lng' => 10.91,
-            ]
+            ],
+            'thresholds' => [
+                'temperature' => [
+                    'upper' => 11,
+                    'lower' => 10,
+                ],
+                'wind' => [
+                    'upper' => 5,
+                    'lower' => 0,
+                ],
+            ],
         ],
 
         \App\Recorders\CustomEventRecorder::class => [

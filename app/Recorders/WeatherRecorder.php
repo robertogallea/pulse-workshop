@@ -2,8 +2,11 @@
 
 namespace App\Recorders;
 
+use App\Events\WeatherChanged;
 use Carbon\Carbon;
-use Illuminate\Config\Repository;
+use Illuminate\Cache\Repository as CacheRepository;
+use Illuminate\Config\Repository as ConfigRespository;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Laravel\Pulse\Events\IsolatedBeat;
 use Laravel\Pulse\Pulse;
@@ -15,7 +18,11 @@ class WeatherRecorder
 
     public string $listen = IsolatedBeat::class;
 
-    public function __construct(protected Pulse $pulse, protected Repository $config)
+    public function __construct(
+        protected Pulse $pulse,
+        protected ConfigRespository $config,
+        protected CacheRepository $cache,
+    )
     {
 
     }
@@ -37,10 +44,49 @@ class WeatherRecorder
 
             $this->pulse->set('weather', 'data', json_encode($weather, flags: JSON_THROW_ON_ERROR));
 
+            $this->checkActuators($weather, ['temperature', 'wind']);
+
             $this->pulse->record('temperature', 'data', (int) ((float) $weather['temperature'] * 10))
                 ->avg()->onlyBuckets();
             $this->pulse->record('wind', 'data', (int) ((float) $weather['wind'] * 10))
                 ->avg()->onlyBuckets();
         });
+    }
+
+    private function checkActuators(array $weathers, array $measures): void
+    {
+        foreach ($measures as $measure) {
+            $this->needsAction($weathers[$measure], $measure);
+        }
+    }
+
+    private function needsAction($value, string $measure): void
+    {
+        $currentValue = (float) $value;
+
+        if ($this->measureHasChangedEnough($currentValue, $measure)) {
+            Event::dispatch(new WeatherChanged($currentValue, $measure));
+        }
+    }
+
+    private function measureHasChangedEnough(float $currentValue, string $measure): bool
+    {
+
+        $cacheKey = self::class.':'.$measure.'-actuated';
+
+        $thresholds = $this->config->get('pulse.recorders.'.self::class.'.thresholds.'.$measure);
+        $alreadyNotified = cache()->get($cacheKey) ?? false;
+
+        dump("Current value for {$measure} is {$currentValue}");
+
+        if (($currentValue >= $thresholds['upper']) && (! $alreadyNotified)) {
+            cache()->set($cacheKey, true);
+            return true;
+        } elseif ($currentValue <= $thresholds['lower']) {
+            dump('Deleting cache key');
+            cache()->forget($cacheKey);
+        }
+
+        return false;
     }
 }
