@@ -19,6 +19,8 @@ class FakeRequestController extends Controller
 
         Event::dispatch(new CustomEvent(Auth::id(), now()->timestamp));
 
+        Event::dispatch(new CustomEvent(Auth::id(), now()->timestamp));
+
         // EXCEPTIONS
         Lottery::odds(0.1)
             ->winner(fn() => match (rand(1, 3)) {

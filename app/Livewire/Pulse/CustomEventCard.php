@@ -13,33 +13,30 @@ class CustomEventCard extends Card
 {
     public function render()
     {
+        [[$total, $totalByUsers], $time, $runAt] = $this->remember(
+            function() {
+                $total = $this->aggregateTotal('custom_event', 'count');
 
+                $totalByUsers = $this->aggregate('custom_event', 'count');
 
-        [[$total, $totalByUsers], $time, $runAt] = $this->remember(function () {
+                $users = Pulse::resolveUsers($totalByUsers->pluck('key'));
 
-            $total = $this->aggregateTotal('custom_event', 'count');
-
-            $totalByUsers = $this->aggregate('custom_event', 'count');
-
-            $users = Pulse::resolveUsers($totalByUsers->pluck('key'));
-
-            $totalByUsers = $totalByUsers
-                ->map(function ($item) use ($users) {
+                $totalByUsers = $totalByUsers->map(function ($row) use ($users) {
                     return (object) [
-                        'key' => $item->key,
-                        'user' => $users->find($item->key),
-                        'count' => $item->count,
+                        'key' => $row->key,
+                        'user' => $users->find($row->key),
+                        'count' => $row->count,
                     ];
                 });
 
-            return [$total, $totalByUsers];
-        });
+                return [$total, $totalByUsers];
+            });
 
-        $config = Config::get('pulse.recorders.'.CustomEventRecorder::class);
+        $config = Config::get('pulse.recorders.' . CustomEventRecorder::class);
 
         return view('livewire.pulse.custom-event-card', [
-            'totalByUsers' => $totalByUsers,
             'total' => $total,
+            'totalByUsers' => $totalByUsers,
             'config' => $config,
             'time' => $time,
             'runAt' => $runAt,

@@ -13,21 +13,18 @@ class CustomEventRecorder
 
     public string $listen = CustomEvent::class;
 
-    public function __construct(
-        protected Pulse $pulse,
-        protected Repository $config
-    )
+    public function __construct(protected Pulse $pulse, protected Repository $config)
     {
 
     }
 
-    public function record(CustomEvent $event): void
+    public function record(CustomEvent $event)
     {
         if (! $this->shouldSample()) {
             return;
         }
 
-        $this->pulse->record('custom_event', $event->user_id, timestamp: $event->timestamp)
+        $this->pulse->record('custom_event', $event->userId, timestamp: $event->timestamp)
             ->count();
     }
 }
