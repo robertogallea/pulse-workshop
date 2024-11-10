@@ -62,4 +62,5 @@ Elenco degli hash dei commit:
 - `7cc894a` - Custom cards: Exercise 1: Pulse Storage Card (SharedBeat)
 - `0a4fdca` - Custom cards: Weather Graph Card
 - `66bde3a` - Lifecycle recorder example
+- `f7fb1e3` - Add reactor
 
